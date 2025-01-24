@@ -59,7 +59,7 @@ runs:
 
     - name: Commit and push changes
       run: |
-        git add *.json
+        git add data.json
         git commit -m "${{ inputs.git-message }}"
         git push
       shell: bash
