@@ -35,7 +35,7 @@ on:
         - cron: '*/10 * * * *'
 
 jobs:
-    stargazer:
+    watcher:
         runs-on: ubuntu-latest
         steps:
             - name: pku-grade-watcher
