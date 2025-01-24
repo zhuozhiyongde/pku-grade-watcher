@@ -60,8 +60,12 @@ runs:
     - name: Commit and push changes
       run: |
         git add data.json
-        git commit -m "${{ inputs.git-message }}"
-        git push
+        if ! git diff-index --quiet HEAD --; then
+          git commit -m "${{ inputs.git-message }}"
+          git push
+        else
+          echo "No changes to commit."
+        fi
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.api-token }}
