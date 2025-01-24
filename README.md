@@ -41,7 +41,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: pku-grade-watcher
-              uses: zhuozhiyongde/pku-grade-watcher@latest
+              uses: zhuozhiyongde/pku-grade-watcher@1.0.0
               with:
                   api-token: ${{ secrets.API_TOKEN }}
                   username: ${{ secrets.USERNAME }}
