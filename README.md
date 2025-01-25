@@ -41,7 +41,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: pku-grade-watcher
-              uses: zhuozhiyongde/pku-grade-watcher@v1.0.0
+              uses: zhuozhiyongde/pku-grade-watcher@v1.1.0
               with:
                   api-token: ${{ secrets.API_TOKEN }}
                   username: ${{ secrets.USERNAME }}
@@ -51,6 +51,8 @@ jobs:
                   git-email: actions@users.noreply.github.com
                   git-message: 'chore(updates): updated data'
 ```
+
+在成功设置好后，你应当能接收到一条初始化通知。
 
 ## 免责说明
 
