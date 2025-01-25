@@ -100,6 +100,10 @@ class Session(requests.Session):
                 data = json.load(f)
             with open("data.json", "w", encoding="utf-8") as f:
                 json.dump(data, f, ensure_ascii=False, indent=4)
+            self._notifier.send(
+                title="[成绩更新] 初始化",
+                info="成功初始化成绩数据",
+            )
 
     def check_update(self):
         """检查成绩更新并返回新增课程信息"""
