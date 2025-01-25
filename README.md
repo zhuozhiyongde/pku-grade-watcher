@@ -20,7 +20,7 @@
     - `API_TOKEN`：个人 GitHub API 令牌
     - `USERNAME`：学号
     - `PASSWORD`：密码
-    - `BARK`：Bark 令牌
+    - `BARK`：Bark 令牌，用于通知成绩更新，请参见 [Bark 官网](https://bark.day.app/)
 2. 请注意，由于需要提交更新后的成绩数据到你的仓库，你还需要在 `Settings -> Actions -> General -> Actions permissions -> Workflow permissions` 中启用 `Read and write permissions` 权限。
 
 最后，在仓库中创建 `.github/workflows/watcher.yml` 文件，内容如下（以每 10 分钟查询一次为例）：
