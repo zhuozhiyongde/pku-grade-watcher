@@ -16,6 +16,9 @@
 # 克隆项目
 git clone https://github.com/Arthals/Grade-Watcher.git
 
+# 切换到 self-deployment 分支
+git checkout self-deployment
+
 # 进入项目目录
 cd Grade-Watcher
 
@@ -43,7 +46,7 @@ crontab -e
 
 ![init](README.assets/init.png)
 
-如果你的手机并非 iOS，那么你可以尝试 fork 本项目并在 `session.py` 中实现其他的 Notifier.
+如果你的手机并非 iOS，那么你可以尝试 fork 本项目并在 `session.py` 中实现其他的 Notifier。
 
 ## 免责说明
 
