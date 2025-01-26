@@ -9,15 +9,18 @@
 import os
 from datetime import datetime
 
+import yaml
+
 from session import BarkNotifier, Session
 
 
 def start():
     print(f"{'[Start]':<15}: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-
-    username = os.getenv("username", "")
-    password = os.getenv("password", "")
-    bark = os.getenv("bark", "")
+    
+    config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
+    username = config["username"]
+    password = config["password"]
+    bark = config["bark"]
 
     if not username or not password:
         raise ValueError("username, password are required")
