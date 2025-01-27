@@ -11,7 +11,8 @@ import json
 import os
 import random
 import re
-
+import time
+from datetime import datetime
 import requests
 
 
@@ -51,8 +52,15 @@ class Session(requests.Session):
 
         return res
 
+    def logger(self, title, info):
+        print(
+            f"{'[' + title + ']':<15}{'[' + datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ']'}: {info}"
+        )
+
     def login(self) -> bool:
         """登录门户，重定向成绩查询"""
+        self.cookies.clear()
+        self.logger("Login", "正在尝试登录...")
         # IAAA 登录
         json = self.post(
             "https://iaaa.pku.edu.cn/iaaa/oauthlogin.do",
@@ -82,6 +90,7 @@ class Session(requests.Session):
         # 获取鉴权 JSESSION ID
         jsessionid = re.search(r"jsessionid=([^#;]+)", res.url).group(1)
         self.cookies.set("JSESSIONID", jsessionid)
+        self.logger("Succeed", "登录成功，JSESSIONID: " + jsessionid)
 
     def get_grade(self):
         """获取成绩"""
@@ -144,8 +153,6 @@ class Session(requests.Session):
             with open("data.json", "w", encoding="utf-8") as f:
                 json.dump(new_data, f, ensure_ascii=False, indent=4)
 
-            print(f"{'[Succeed]':<15}: 成功发现 {len(new_courses)} 门新课程")
-
             if new_courses and self._notifier:
                 for course in new_courses:
                     self._notifier.send(
@@ -158,6 +165,43 @@ class Session(requests.Session):
         except Exception as e:
             print(f"检查更新时出错: {e}")
             return []
+
+    def check_cycle(self):
+        """执行完整的检查周期"""
+        # self.logger("Start", "开始成绩检查")
+        self.get_grade()
+        new_courses = self.check_update()
+        if new_courses:
+            self.logger("Succeed", f"成功发现 {len(new_courses)} 门新课程")
+        else:
+            self.logger("Nothing", "未发现新成绩")
+
+    def run(self):
+        """永续运行主循环"""
+        self.logger("Start", "开始运行")
+        while True:
+            try:
+                self.login()
+
+                # 登录后立即检查一次成绩
+                self.check_cycle()
+
+                # 保持会话有效期间定期检查
+                while True:
+                    time.sleep(60)  # 等待1分钟
+                    try:
+                        self.check_cycle()
+                    except requests.exceptions.HTTPError as e:
+                        self.logger("Error", f"检测到会话过期: {e}")
+                        raise  # 跳出内层循环重新登录
+                    except Exception as e:
+                        self.logger("Error", f"检查出错: {e}")
+
+            except Exception as e:
+                self.logger("Error", f"运行出错: {e}")
+                self.logger("Retry", "60秒后重试...")
+                time.sleep(60)
+                self.cookies.clear()  # 清除旧cookie
 
 
 class BarkNotifier:

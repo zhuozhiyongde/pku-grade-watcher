@@ -6,17 +6,12 @@
 # @Contact :   zhuozhiyongde@126.com
 # @Software:   Visual Studio Code
 
-import os
-from datetime import datetime
-
 import yaml
 
 from session import BarkNotifier, Session
 
 
 def start():
-    print(f"{'[Start]':<15}: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-    
     config = yaml.load(open("config.yaml", "r"), Loader=yaml.FullLoader)
     username = config["username"]
     password = config["password"]
@@ -36,11 +31,7 @@ def start():
     }
 
     s = Session(config=data, notifier=notifier)
-    s.login()
-    s.get_grade()
-    s.check_update()
-
-    print(f"{'[End]':<15}: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    s.run()
 
 
 if __name__ == "__main__":
