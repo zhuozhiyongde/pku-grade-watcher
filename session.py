@@ -135,19 +135,24 @@ class Session(requests.Session):
                     if "bkcjbh" in course:
                         old_ids.add(course["bkcjbh"])
 
-            # 收集新增课程信息
+            # 提取所有新课程ID
+            cur_ids = set()
             new_courses = []
             for term in new_data.get("cjxx", []):
                 for course in term.get("list", []):
-                    cid = course.get("bkcjbh")
-                    if cid and cid not in old_ids:
-                        new_courses.append(
-                            {
-                                "name": course.get("kcmc", "无"),
-                                "grade": course.get("xqcj", "无"),
-                                "gpa": course.get("jd", "无"),
-                            }
-                        )
+                    if "bkcjbh" in course:
+                        cur_ids.add(course["bkcjbh"])
+                        cid = course["bkcjbh"]
+                        if cid not in old_ids:
+                            new_courses.append(
+                                {
+                                    "name": course.get("kcmc", "无"),
+                                    "grade": course.get("xqcj", "无"),
+                                    "gpa": course.get("jd", "无"),
+                                }
+                            )
+
+            assert len(cur_ids) >= len(old_ids), "异常返回课程数据：" + str(cur_ids)
 
             # 更新本地数据文件
             with open("data.json", "w", encoding="utf-8") as f:
@@ -163,8 +168,8 @@ class Session(requests.Session):
             return new_courses
 
         except Exception as e:
-            print(f"检查更新时出错: {e}")
-            return []
+            self.logger("Error", f"检查更新时出错: {e}")
+            raise e
 
     def check_cycle(self):
         """执行完整的检查周期"""
