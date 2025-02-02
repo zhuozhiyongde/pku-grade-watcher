@@ -9,7 +9,7 @@
 -   📢 Bark 通知，让你随时随地知道自己考咋样 ~~寄了没、老师调没调~~
 
 > [!WARNING]
-> 更新：由于 [这篇文章](https://www.sivamuthukumar.com/blog/ghactions-scheduled-workflows-external-trigger) 中指出的 GitHub Actions 并不会保证 schedule 调度的准确性，所以推荐你 clone 此项目并自行部署，或者设置外部触发器。
+> 更新：由于 [这篇文章](https://www.sivamuthukumar.com/blog/ghactions-scheduled-workflows-external-trigger) 中指出的 GitHub Actions 并不会保证 schedule 调度的准确性，所以推荐你 clone 此项目并自行部署（参见 [self-deployment 分支](https://github.com/zhuozhiyongde/pku-grade-watcher/tree/self-deployment)），或者设置外部触发器。
 
 ![sample](README.assets/sample.png)
 
