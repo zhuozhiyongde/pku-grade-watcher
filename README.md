@@ -14,7 +14,7 @@
 
 ```bash
 # 克隆项目
-git clone https://github.com/Arthals/Grade-Watcher.git
+git clone https://github.com/zhuozhiyongde/pku-grade-watcher.git
 
 # 切换到 self-deployment 分支
 git checkout self-deployment
