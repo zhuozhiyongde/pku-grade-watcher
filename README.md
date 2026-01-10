@@ -78,7 +78,7 @@ function triggerGithubAction() {
 
     // 2. 修改下面的 URL，替换为你自己的私有仓库地址
     // 如https://api.github.com/repos/Zhaoyi-Tian/Watch-Grade/actions/workflows/watcher.yml/dispatches
-  const url = "https://api.github.com/repos/你的用户名/你用来查分的私有仓库名/dispatches";
+  const url = "https://api.github.com/repos/你的用户名/你用来查分的私有仓库名/actions/workflows/watcher.yml/dispatches";
   
 
   const payload = {
