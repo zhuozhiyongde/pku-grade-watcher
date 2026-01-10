@@ -15,8 +15,8 @@ inputs:
   password:
     description: 'PKU password'
     required: true
-  bark:
-    description: 'Bark key'
+  sendkey:
+    description: 'Server酱 sendkey'
     default: ''
   git-name:
     description: 'Name used for Git commits'
@@ -42,7 +42,7 @@ runs:
       run: |
         git config --global user.name "${{ inputs.git-name }}"
         git config --global user.email "${{ inputs.git-email }}"
-        git clone https://github.com/zhuozhiyongde/pku-grade-watcher.git
+        git clone -b v1.0.0 --single-branch https://github.com/Zhaoyi-Tian/pku-grade-watcher.git
         cd pku-grade-watcher
         python -m pip install --upgrade pip
         pip install -r requirements.txt
@@ -55,7 +55,7 @@ runs:
       env:
         username: ${{ inputs.username }}
         password: ${{ inputs.password }}
-        bark: ${{ inputs.bark }}
+        sendkey: ${{ inputs.sendkey }}
 
     - name: Commit and push changes
       run: |

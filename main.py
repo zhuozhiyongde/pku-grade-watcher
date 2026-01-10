@@ -7,9 +7,10 @@
 # @Software:   Visual Studio Code
 
 import os
+import time
 from datetime import datetime
 
-from session import BarkNotifier, Session
+from session import ServerChanNotifier, Session
 
 
 def start():
@@ -17,15 +18,16 @@ def start():
 
     username = os.getenv("username", "")
     password = os.getenv("password", "")
-    bark = os.getenv("bark", "")
-
+    sendkey = os.getenv("sendkey", "")
     if not username or not password:
         raise ValueError("username, password are required")
 
-    if not bark:
+    if not sendkey:
+        print("[Debug]      : sendkey is empty, notifier = None")
         notifier = None
     else:
-        notifier = BarkNotifier(bark)
+        print("[Debug]      : creating ServerChanNotifier")
+        notifier = ServerChanNotifier(sendkey)
 
     data = {
         "username": username,
@@ -33,9 +35,27 @@ def start():
     }
 
     s = Session(config=data, notifier=notifier)
+
+    # 测量 login 耗时
+    t0 = time.time()
+    print("[Debug]      : 正在登录...")
     s.login()
+    t1 = time.time()
+    print(f"[Debug]      : login 耗时 {t1 - t0:.2f} 秒")
+
+    # 测量 get_grade 耗时
+    t0 = time.time()
+    print("[Debug]      : 正在获取成绩...")
     s.get_grade()
+    t1 = time.time()
+    print(f"[Debug]      : get_grade 耗时 {t1 - t0:.2f} 秒")
+
+    # 测量 check_update 耗时
+    t0 = time.time()
+    print("[Debug]      : 正在检查更新...")
     s.check_update()
+    t1 = time.time()
+    print(f"[Debug]      : check_update 耗时 {t1 - t0:.2f} 秒")
 
     print(f"{'[End]':<15}: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
