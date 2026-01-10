@@ -13,6 +13,7 @@ import random
 import re
 
 import requests
+from serverchan_sdk import sc_send
 
 
 class Session(requests.Session):
@@ -160,17 +161,9 @@ class Session(requests.Session):
             return []
 
 
-class BarkNotifier:
-    def __init__(self, token):
-        self._token = token
+class ServerChanNotifier:
+    def __init__(self, sendkey):
+        self._sendkey = sendkey
 
     def send(self, title, info):
-        requests.post(
-            f"https://api.day.app/{self._token}",
-            data={
-                "title": title,
-                "body": info,
-                "icon": "https://cdn.arthals.ink/pku.jpg",
-                "level": "timeSensitive",
-            },
-        )
+        sc_send(self._sendkey, title, info, {"tags": "成绩更新"})
