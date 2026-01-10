@@ -40,7 +40,7 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: pku-grade-watcher
-              uses: Zhaoyi-Tian/pku-grade-watcher@serverchan-3 //临时，已向A神提交PR，后续可替换
+              uses: Zhaoyi-Tian/pku-grade-watcher@v1.0.0 //临时，已向A神提交PR，后续可替换
               with:
                   api-token: ${{ secrets.API_TOKEN }}
                   username: ${{ secrets.USERNAME }}
