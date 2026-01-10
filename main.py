@@ -19,9 +19,6 @@ def start():
     username = os.getenv("username", "")
     password = os.getenv("password", "")
     sendkey = os.getenv("sendkey", "")
-
-    print(f"[Debug]      : sendkey from env = '{sendkey[:10]}...' (len={len(sendkey)})" if sendkey else "[Debug]      : sendkey from env = ''")
-
     if not username or not password:
         raise ValueError("username, password are required")
 
